@@ -10,6 +10,36 @@
         <h1>Gerenciador de Tarefas Acadêmicas</h1>
     </header>
     <main>
-        
+        <section aria-labelledby="busca-filtros-heading">
+            <h2 id="busca-filtros-heading">Busca e Filtros</h2>
+            <form>
+                <div>
+                    <label for="busca-titulo">Buscar por título da tarefa</label>
+                    <input type="search" id="busca-titulo" name="busca-titulo">
+                </div>
+                <fieldset>
+                    <legend>Filtrar por status</legend>
+
+                    <input type="radio" id="status-todos" name="filtro-status" value="todos" checked>
+                    <label for="status-todos">Todos</label>
+
+                    <input type="radio" id="status-a-fazer" name="filtro-status" value="a-fazer">
+                    <label for="status-a-fazer">A fazer</label>
+
+                    <input type="radio" id="status-em-andamento" name="filtro-status" value="em-andamento">
+                    <label for="status-em-andamento">Em andamento</label>
+
+                    <input type="radio" id="status-em-revisao" name="filtro-status" value="em-revisao">
+                    <label for="status-em-revisao">Em revisão</label>
+
+                    <input type="radio" id="status-concluida" name="filtro-status" value="concluida">
+                    <label for="status-concluida">Concluída</label>
+                </fieldset>
+
+                <fieldset>
+                    
+                </fieldset>
+            </form>
+        </section>
     </main>
 </body>
