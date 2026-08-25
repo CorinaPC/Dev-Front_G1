@@ -37,9 +37,173 @@
                 </fieldset>
 
                 <fieldset>
-                    
+                    <legend>Filtrar por prioridade</legend>
+
+                    <input type="radio" id="prioridade-todas" name="filtro-prioridade" value="todas" checked>
+                    <label for="prioridade-todas">Todas</label>
+
+                    <input type="radio" id="prioridade-baixa" name="filtro-prioridade" value="baixa">
+                    <label for="prioridade-baixa">Baixa</label>
+
+                    <input type="radio" id="prioridade-media" name="filtro-prioridade" value="media">
+                    <label for="prioridade-media">Média</label>
+
+                    <input type="radio" id="prioridade-alta" name="filtro-prioridade" value="alta">
+                    <label for="prioridade-alta">Alta</label>   
                 </fieldset>
             </form>
         </section>
+
+        <section aria-labelledby="quadro-heading">
+            <h2 id="quadro-heading">Quadro de tarefas</h2>
+
+            <section aria-labelledby="col-a-fazer-heading">
+                <h3 id="col-a-fazer-heading">A fazer</h3>
+                <ul>
+                <li>
+                    <article aria-labelledby="tarefa-1-titulo">
+                    <h4 id="tarefa-1-titulo">Criar wireframes de baixa fidelidade das telas</h4>
+                    <dl>
+                        <dt>Projeto</dt>
+                        <dd>Gerenciador de Tarefas Acadêmicas</dd>
+                        <dt>Responsável</dt>
+                        <dd>Ana Beatriz Souza</dd>
+                        <dt>Prazo</dt>
+                        <dd><time datetime="2026-08-20">20/08/2026</time></dd>
+                        <dt>Prioridade</dt>
+                        <dd>Média</dd>
+                    </dl>
+                    </article>
+                </li>
+                <li>
+                    <article aria-labelledby="tarefa-2-titulo">
+                    <h4 id="tarefa-2-titulo">Pesquisar padrões de acessibilidade para quadros Kanban</h4>
+                    <dl>
+                        <dt>Projeto</dt>
+                        <dd>Gerenciador de Tarefas Acadêmicas</dd>
+                        <dt>Responsável</dt>
+                        <dd>Rafael Nunes Costa</dd>
+                        <dt>Prazo</dt>
+                        <dd><time datetime="2026-08-22">22/08/2026</time></dd>
+                        <dt>Prioridade</dt>
+                        <dd>Baixa</dd>
+                    </dl>
+                    </article>
+                </li>
+                </ul>
+            </section>
+
+            <section aria-labelledby="col-em-andamento-heading">
+                <h3 id="col-em-andamento-heading">Em andamento</h3>
+                <ul>
+                <li>
+                    <article aria-labelledby="tarefa-3-titulo">
+                    <h4 id="tarefa-3-titulo">Estruturar HTML semântico do quadro de tarefas</h4>
+                    <dl>
+                        <dt>Projeto</dt>
+                        <dd>Gerenciador de Tarefas Acadêmicas</dd>
+                        <dt>Responsável</dt>
+                        <dd>Carlos Eduardo Lima</dd>
+                        <dt>Prazo</dt>
+                        <dd><time datetime="2026-08-11">11/08/2026</time></dd>
+                        <dt>Prioridade</dt>
+                        <dd>Alta</dd>
+                    </dl>
+                    </article>
+                </li>
+                <li>
+                    <article aria-labelledby="tarefa-4-titulo">
+                    <h4 id="tarefa-4-titulo">Revisar hierarquia de cabeçalhos da página</h4>
+                    <dl>
+                        <dt>Projeto</dt>
+                        <dd>Gerenciador de Tarefas Acadêmicas</dd>
+                        <dt>Responsável</dt>
+                        <dd>Ana Beatriz Souza</dd>
+                        <dt>Prazo</dt>
+                        <dd><time datetime="2026-08-12">12/08/2026</time></dd>
+                        <dt>Prioridade</dt>
+                        <dd>Média</dd>
+                    </dl>
+                    </article>
+                </li>
+                </ul>
+            </section>
+
+            <section aria-labelledby="col-em-revisao-heading">
+                <h3 id="col-em-revisao-heading">Em revisão</h3>
+                <ul>
+                <li>
+                    <article aria-labelledby="tarefa-5-titulo">
+                    <h4 id="tarefa-5-titulo">Validar formulário de busca e filtros com leitor de tela</h4>
+                    <dl>
+                        <dt>Projeto</dt>
+                        <dd>Gerenciador de Tarefas Acadêmicas</dd>
+                        <dt>Responsável</dt>
+                        <dd>Rafael Nunes Costa</dd>
+                        <dt>Prazo</dt>
+                        <dd><time datetime="2026-08-09">09/08/2026</time></dd>
+                        <dt>Prioridade</dt>
+                        <dd>Alta</dd>
+                    </dl>
+                    </article>
+                </li>
+                <li>
+                    <article aria-labelledby="tarefa-6-titulo">
+                    <h4 id="tarefa-6-titulo">Testar navegação completa apenas com teclado</h4>
+                    <dl>
+                        <dt>Projeto</dt>
+                        <dd>Gerenciador de Tarefas Acadêmicas</dd>
+                        <dt>Responsável</dt>
+                        <dd>Carlos Eduardo Lima</dd>
+                        <dt>Prazo</dt>
+                        <dd><time datetime="2026-08-10">10/08/2026</time></dd>
+                        <dt>Prioridade</dt>
+                        <dd>Média</dd>
+                    </dl>
+                    </article>
+                </li>
+                </ul>
+            </section>
+
+            <section aria-labelledby="col-concluida-heading">
+                <h3 id="col-concluida-heading">Concluída</h3>
+                <ul>
+                <li>
+                    <article aria-labelledby="tarefa-7-titulo">
+                    <h4 id="tarefa-7-titulo">Criar repositório no GitHub e configurar Git</h4>
+                    <dl>
+                        <dt>Projeto</dt>
+                        <dd>Gerenciador de Tarefas Acadêmicas</dd>
+                        <dt>Responsável</dt>
+                        <dd>Ana Beatriz Souza</dd>
+                        <dt>Prazo</dt>
+                        <dd><time datetime="2026-08-04">04/08/2026</time></dd>
+                        <dt>Prioridade</dt>
+                        <dd>Alta</dd>
+                    </dl>
+                    </article>
+                </li>
+                <li>
+                    <article aria-labelledby="tarefa-8-titulo">
+                    <h4 id="tarefa-8-titulo">Modelar as entidades Projeto e Tarefa</h4>
+                    <dl>
+                        <dt>Projeto</dt>
+                        <dd>Gerenciador de Tarefas Acadêmicas</dd>
+                        <dt>Responsável</dt>
+                        <dd>Rafael Nunes Costa</dd>
+                        <dt>Prazo</dt>
+                        <dd><time datetime="2026-08-05">05/08/2026</time></dd>
+                        <dt>Prioridade</dt>
+                        <dd>Baixa</dd>
+                    </dl>
+                    </article>
+                </li>
+                </ul>
+            </section>
+        </section>
     </main>
+    <footer>
+        <p>Corina P. Carneiro — Disciplina de Desenvolvimento Front-end, turma de 4N</p>
+    </footer>
 </body>
+</html> 
