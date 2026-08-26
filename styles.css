@@ -232,3 +232,27 @@ fieldset label {
   border-top: 1px solid var(--cor-borda);
   font-size: 0.875rem;
 }
+
+/* Telas maiores */
+
+/* Quebra 1 — 640px*/
+@media (min-width: 640px) {
+  main {
+    padding: var(--espaco-3);
+  }
+
+  .busca-filtros {
+    padding: var(--espaco-3);
+  }
+
+  .quadro {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Quebra 2 — 1080px*/
+@media (min-width: 1080px) {
+  .quadro {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
