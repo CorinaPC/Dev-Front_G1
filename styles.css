@@ -159,6 +159,7 @@ fieldset label {
 
 /* Colunas de status (Flexbox vertical) */
 .coluna {
+  min-width: 0;
   background-color: var(--cor-fundo);
   border-radius: var(--raio);
   padding: var(--espaco-2);
