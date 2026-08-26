@@ -80,6 +80,40 @@ main {
 }
 
 /* Busca e filtros */
+.busca-filtros {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: var(--espaco-2);
+}
+
+.busca-filtros h2 {
+  font-size: 1.125rem;
+  margin-bottom: var(--espaco-2);
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-3);
+}
+
+.filtros > div,
+.filtros > fieldset {
+  flex: 1 1 200px;
+}
+
+.filtros > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.filtros label {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
 input[type="search"] {
   width: 100%;
   min-height: 2.5rem;
