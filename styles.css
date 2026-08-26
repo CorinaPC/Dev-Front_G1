@@ -144,3 +144,91 @@ fieldset label {
   font-weight: 400;
   font-size: 0.9375rem;
 }
+
+/* Quadro (Grid) */
+.quadro {
+  display: grid;
+  grid-template-columns: 1fr; /* base: uma coluna só, empilhada */
+  gap: var(--espaco-3);
+}
+
+.quadro > h2 {
+  grid-column: 1 / -1;
+  font-size: 1.125rem;
+}
+
+/* Colunas de status (Flexbox vertical) */
+.coluna {
+  background-color: var(--cor-fundo);
+  border-radius: var(--raio);
+  padding: var(--espaco-2);
+}
+
+.coluna-titulo {
+  margin-bottom: var(--espaco-2);
+  padding-bottom: var(--espaco-1);
+  border-bottom: 3px solid var(--cor-borda);
+  font-size: 1rem;
+}
+
+.coluna--a-fazer .coluna-titulo { border-bottom-color: var(--cor-a-fazer); }
+.coluna--em-andamento .coluna-titulo { border-bottom-color: var(--cor-em-andamento); }
+.coluna--em-revisao .coluna-titulo { border-bottom-color: var(--cor-em-revisao); }
+.coluna--concluida .coluna-titulo { border-bottom-color: var(--cor-concluida); }
+
+.lista-cartoes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+/* ---------- Cartão de tarefa ---------- */
+.cartao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: var(--espaco-2);
+}
+
+.cartao-cabecalho {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+}
+
+.cartao-titulo {
+  flex: 1;
+  min-width: 0; /* permite encolher abaixo do conteúdo — é o que libera o ellipsis */
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cartao-prioridade {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  color: var(--cor-texto-suave);
+}
+
+.cartao-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.cartao-info dt {
+  color: var(--cor-texto-suave);
+}
+
+.cartao-prazo {
+  margin-top: auto; /* empurra o prazo pro rodapé do cartão */
+  padding-top: var(--espaco-2);
+  border-top: 1px solid var(--cor-borda);
+  font-size: 0.875rem;
+}
