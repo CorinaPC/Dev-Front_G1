@@ -14,7 +14,7 @@
             <section class="busca-filtros" aria-labelledby="busca-filtros-heading">
                 <h2 id="busca-filtros-heading">Busca e Filtros</h2>
                 <form class="filtros">
-                    <div>
+                    <div class="campo-busca">
                         <label for="busca-titulo">Buscar por título da tarefa</label>
                         <input type="search" id="busca-titulo" name="busca-titulo">
                     </div>
@@ -58,149 +58,30 @@
             <section class="quadro" aria-labelledby="quadro-heading">
                 <h2 id="quadro-heading">Quadro de tarefas</h2>
 
-                <section class="coluna coluna--a-fazer" aria-labelledby="col-a-fazer-heading">
-                    <h3 id="col-a-fazer-heading" class="coluna-titulo">A fazer</h3>
-                    <ul class="lista-cartoes" role="list">
-                        <li>
-                            <article class="cartao" aria-labelledby="tarefa-1-titulo">
-                                <div class="cartao-cabecalho">
-                                    <h4 id="tarefa-1-titulo"  class="cartao-titulo">Criar wireframes de baixa fidelidade das telas</h4>
-                                    <p class="cartao-prioridade">Prioridade: Média</p>
-                                </div>
-                                <dl class="cartao-info">
-                                    <dt>Projeto</dt>
-                                    <dd>Gerenciador de Tarefas Acadêmicas</dd>
-                                    <dt>Responsável</dt>
-                                    <dd>Ana Beatriz Souza</dd>
-                                </dl>
-                                <p class="cartao-prazo">Prazo: <time datetime="2026-08-20">20/08/2026</time></p>                            
-                            </article>
-                        </li>
-                        <li>
-                            <article class="cartao" aria-labelledby="tarefa-2-titulo">
-                                <div class="cartao-cabecalho">
-                                    <h4 id="tarefa-2-titulo"  class="cartao-titulo">Pesquisar padrões de acessibilidade para quadros Kanban</h4>
-                                    <p class="cartao-prioridade">Prioridade: Baixa</p>
-                                </div>
-                                <dl class="cartao-info">
-                                    <dt>Projeto</dt>
-                                    <dd>Gerenciador de Tarefas Acadêmicas</dd>
-                                    <dt>Responsável</dt>
-                                    <dd>Rafael Nunes Costa</dd>
-                                </dl>
-                                <p class="cartao-prazo">Prazo: <time datetime="2026-08-22">22/08/2026</time></p>
-                            </article>
-                        </li>
-                    </ul>
-                </section>
+                <p id="estado-quadro" role="status" aria-live="polite" class="estado-quadro"></p>
+  
+                <div id="colunas-quadro" class="colunas-quadro" hidden>
 
-                <section class="coluna coluna--em-andamento" aria-labelledby="col-em-andamento-heading">
-                    <h3 id="col-em-andamento-heading" class="coluna-titulo">Em andamento</h3>
-                    <ul class="lista-cartoes" role="list">
-                        <li>
-                            <article class="cartao" aria-labelledby="tarefa-3-titulo">
-                                <div class="cartao-cabecalho">
-                                    <h4 id="tarefa-3-titulo" class="cartao-titulo">Estruturar HTML semântico do quadro de tarefas</h4>
-                                    <p class="cartao-prioridade">Prioridade: Alta</p>
-                                </div>
-                                <dl class="cartao-info">
-                                    <dt>Projeto</dt>
-                                    <dd>Gerenciador de Tarefas Acadêmicas</dd>
-                                    <dt>Responsável</dt>
-                                    <dd>Carlos Eduardo Lima</dd>
-                                </dl>
-                                <p class="cartao-prazo">Prazo: <time datetime="2026-08-11">11/08/2026</time></p>
-                            </article>
-                        </li>
-                        <li>
-                            <article class="cartao" aria-labelledby="tarefa-4-titulo">
-                                <div class="cartao-cabecalho">
-                                    <h4 id="tarefa-4-titulo" class="cartao-titulo">Revisar hierarquia de cabeçalhos da página</h4>
-                                    <p class="cartao-prioridade">Prioridade: Média</p>
-                                </div>
-                                <dl class="cartao-info">
-                                    <dt>Projeto</dt>
-                                    <dd>Gerenciador de Tarefas Acadêmicas</dd>
-                                    <dt>Responsável</dt>
-                                    <dd>Ana Beatriz Souza</dd>
-                                </dl>
-                                <p class="cartao-prazo">Prazo: <time datetime="2026-08-12">12/08/2026</time></p>
-                            </article>
-                        </li>
-                    </ul>
-                </section>
+                    <section class="coluna coluna--a-fazer" aria-labelledby="col-a-fazer-heading">
+                        <h3 id="col-a-fazer-heading" class="coluna-titulo">A fazer</h3>
+                        <ul class="lista-cartoes" data-lista-status="a-fazer" role="list"></ul>
+                    </section>
 
-                <section class="coluna coluna--em-revisao" aria-labelledby="col-em-revisao-heading">
-                    <h3 id="col-em-revisao-heading" class="coluna-titulo">Em revisão</h3>
-                    <ul class="lista-cartoes" role="list">
-                        <li>
-                            <article class="cartao" aria-labelledby="tarefa-5-titulo">
-                                <div class="cartao-cabecalho">
-                                    <h4 id="tarefa-5-titulo" class="cartao-titulo">Validar formulário de busca e filtros com leitor de tela</h4>
-                                    <p class="cartao-prioridade">Prioridade: Alta</p>
-                                </div>
-                                <dl class="cartao-info">
-                                    <dt>Projeto</dt>
-                                    <dd>Gerenciador de Tarefas Acadêmicas</dd>
-                                    <dt>Responsável</dt>
-                                    <dd>Rafael Nunes Costa</dd>
-                                </dl>
-                                <p class="cartao-prazo">Prazo: <time datetime="2026-08-09">09/08/2026</time></p>
-                            </article>
-                        </li>
-                        <li>
-                            <article class="cartao" aria-labelledby="tarefa-6-titulo">
-                                <div class="cartao-cabecalho">
-                                    <h4 id="tarefa-6-titulo" class="cartao-titulo">Testar navegação completa apenas com teclado</h4>
-                                    <p class="cartao-prioridade">Prioridade: Média</p>
-                                </div>
-                                <dl class="cartao-info">
-                                    <dt>Projeto</dt>
-                                    <dd>Gerenciador de Tarefas Acadêmicas</dd>
-                                    <dt>Responsável</dt>
-                                    <dd>Carlos Eduardo Lima</dd>
-                                </dl>
-                                <p class="cartao-prazo">Prazo: <time datetime="2026-08-10">10/08/2026</time></p>
-                            </article>
-                        </li>
-                    </ul>
-                </section>
+                    <section class="coluna coluna--em-andamento" aria-labelledby="col-em-andamento-heading">
+                        <h3 id="col-em-andamento-heading" class="coluna-titulo">Em andamento</h3>
+                        <ul class="lista-cartoes" data-lista-status="em-andamento" role="list"></ul>
+                    </section>
 
-                <section class="coluna coluna--concluida" aria-labelledby="col-concluida-heading">
-                    <h3 id="col-concluida-heading" class="coluna-titulo">Concluída</h3>
-                    <ul class="lista-cartoes" role="list">
-                        <li>
-                            <article class="cartao" aria-labelledby="tarefa-7-titulo">
-                                <div class="cartao-cabecalho">
-                                    <h4 id="tarefa-7-titulo" class="cartao-titulo">Criar repositório no GitHub e configurar Git</h4>
-                                    <p class="cartao-prioridade">Prioridade: Alta</p>
-                                </div>
-                                <dl class="cartao-info">
-                                    <dt>Projeto</dt>
-                                    <dd>Gerenciador de Tarefas Acadêmicas</dd>
-                                    <dt>Responsável</dt>
-                                    <dd>Ana Beatriz Souza</dd>
-                                </dl>
-                                <p class="cartao-prazo">Prazo: <time datetime="2026-08-08">08/08/2026</time></p>
-                            </article>
-                        </li>
-                        <li>
-                            <article class="cartao" aria-labelledby="tarefa-8-titulo">
-                                <div class="cartao-cabecalho">
-                                    <h4 id="tarefa-8-titulo" class="cartao-titulo">Modelar as entidades Projeto e Tarefa</h4>
-                                    <p class="cartao-prioridade">Prioridade: Baixa</p>
-                                </div>
-                                <dl class="cartao-info">
-                                    <dt>Projeto</dt>
-                                    <dd>Gerenciador de Tarefas Acadêmicas</dd>
-                                    <dt>Responsável</dt>
-                                    <dd>Rafael Nunes Costa</dd>
-                                </dl>
-                                <p class="cartao-prazo">Prazo: <time datetime="2026-08-09">09/08/2026</time></p>
-                            </article>
-                        </li>
-                    </ul>
-                </section>
+                    <section class="coluna coluna--em-revisao" aria-labelledby="col-em-revisao-heading">
+                        <h3 id="col-em-revisao-heading" class="coluna-titulo">Em revisão</h3>
+                        <ul class="lista-cartoes" data-lista-status="em-revisao" role="list"></ul>
+                    </section>
+
+                    <section class="coluna coluna--concluida" aria-labelledby="col-concluida-heading">
+                        <h3 id="col-concluida-heading" class="coluna-titulo">Concluída</h3>
+                        <ul class="lista-cartoes" data-lista-status="concluida" role="list"></ul>
+                    </section>
+                </div>
             </section>
         </main>
         <footer>
