@@ -14,10 +14,13 @@
             <section class="busca-filtros" aria-labelledby="busca-filtros-heading">
                 <h2 id="busca-filtros-heading">Busca e Filtros</h2>
                 <form class="filtros">
+                    <!-- Campo de Busca -->
                     <div class="campo-busca">
                         <label for="busca-titulo">Buscar por título da tarefa</label>
                         <input type="search" id="busca-titulo" name="busca-titulo">
                     </div>
+
+                    <!-- Filtro de Status -->
                     <fieldset>
                         <legend>Filtrar por status</legend>
 
@@ -37,6 +40,7 @@
                         <label for="status-concluida">Concluída</label>
                     </fieldset>
 
+                    <!-- Filtro de Prioridade -->
                     <fieldset>
                         <legend>Filtrar por prioridade</legend>
 
@@ -52,14 +56,31 @@
                         <input type="radio" id="prioridade-alta" name="filtro-prioridade" value="alta">
                         <label for="prioridade-alta">Alta</label>   
                     </fieldset>
+
+                    <!-- Ordenação por Prazo -->
+                    <div class="campo-ordenacao">
+                        <label for="ordenacao-prazo">Ordenar por prazo</label>
+                        <select id="ordenacao-prazo" name="ordenacao-prazo">
+                            <option value="padrao">Padrão (ordem original)</option>
+                            <option value="prazo-asc">Prazo: mais próximo</option>
+                            <option value="prazo-desc">Prazo: mais distante</option>
+                        </select>
+                    </div>
+
+                    <!-- Botão Limpar Filtros -->
+                    <div class="campo-limpar">
+                        <button type="button" id="btn-limpar-filtros" class="btn-limpar">Limpar filtros</button>
+                    </div>
                 </form>
             </section>
 
             <section class="quadro" aria-labelledby="quadro-heading">
                 <h2 id="quadro-heading">Quadro de tarefas</h2>
 
+                <!-- Região viva acessível para mensagens de estado e contagem -->
                 <p id="estado-quadro" role="status" aria-live="polite" class="estado-quadro"></p>
-  
+                
+                <!-- Colunas do Quadro Kanban -->
                 <div id="colunas-quadro" class="colunas-quadro" hidden>
 
                     <section class="coluna coluna--a-fazer" aria-labelledby="col-a-fazer-heading">
@@ -87,5 +108,7 @@
         <footer>
             <p>Corina P. Carneiro — Disciplina de Desenvolvimento Front-end, turma de 4N</p>
         </footer>
+
+        <script type="module" src="app.js"></script>
     </body>
 </html> 
