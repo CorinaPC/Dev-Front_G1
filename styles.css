@@ -1,259 +1,39 @@
-
-/* Reset mínimo */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body,
-h1, h2, h3, h4,
-p, dl, dd,
-fieldset {
-  margin: 0;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-/* Tokens */
-:root {
-  /* cores de superfície, texto e borda */
-  --cor-fundo: #f4f5f7;
-  --cor-superficie: #ffffff;
-  --cor-texto: #1f2328;
-  --cor-texto-suave: #57606a;
-  --cor-borda: #d0d7de;
-
-  /* uma cor por status */
-  --cor-a-fazer: #57606a;
-  --cor-em-andamento: #9a6700;
-  --cor-em-revisao: #8250df;
-  --cor-concluida: #1a7f37;
-
-  /* escala de espaçamento — 4 níveis */
-  --espaco-1: 0.5rem;
-  --espaco-2: 1rem;
-  --espaco-3: 1.5rem;
-  --espaco-4: 2rem;
-
-  /* raio de canto */
-  --raio: 0.5rem;
-}
-
-/*  Base  */
-body {
-  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
-  color: var(--cor-texto);
-  background-color: var(--cor-fundo);
-  line-height: 1.5;
-}
-
-/*  Cabeçalho e rodapé */
-header {
-  padding: var(--espaco-2);
-  background-color: var(--cor-superficie);
-  border-bottom: 1px solid var(--cor-borda);
-}
-
-header h1 {
-  font-size: clamp(1.25rem, 4vw + 0.5rem, 1.75rem);
-}
-
-footer {
-  padding: var(--espaco-3);
-  text-align: center;
-  color: var(--cor-texto-suave);
-  font-size: 0.875rem;
-}
-
-/* Layout geral */
-main {
-  max-width: 1400px;
-  margin-inline: auto;
-  padding: var(--espaco-2);
-  display: flex;
-  flex-direction: column;
-  gap: var(--espaco-4);
-}
-
-/* Busca e filtros */
-.busca-filtros {
-  background-color: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio);
-  padding: var(--espaco-2);
-}
-
-.busca-filtros h2 {
-  font-size: 1.125rem;
-  margin-bottom: var(--espaco-2);
-}
-
-.filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--espaco-3);
-}
-
-.filtros > div,
-.filtros > fieldset {
-  flex: 1 1 200px;
-}
-
-.filtros > div {
+/* Estilos adicionados para os novos controles da E4 */
+.campo-ordenacao {
   display: flex;
   flex-direction: column;
   gap: var(--espaco-1);
 }
 
-.filtros label {
-  font-weight: 600;
-  font-size: 0.9375rem;
-}
-
-input[type="search"] {
+.campo-ordenacao select {
   width: 100%;
   min-height: 2.5rem;
   padding: var(--espaco-1) var(--espaco-2);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio);
-  font-size: 1rem;
-}
-
-fieldset {
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio);
-  padding: var(--espaco-2);
-}
-
-legend {
-  padding: 0 var(--espaco-1);
-  font-weight: 600;
   font-size: 0.9375rem;
+  background-color: var(--cor-superficie);
 }
 
-fieldset label {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--espaco-1);
-  min-height: 2rem;
+.campo-limpar {
+  display: flex;
+  align-items: flex-end;
+}
+
+.btn-limpar {
+  width: 100%;
+  min-height: 2.5rem;
   padding: var(--espaco-1) var(--espaco-2);
-  font-weight: 400;
-  font-size: 0.9375rem;
-}
-
-/* Quadro (Grid) */
-.quadro {
-  display: grid;
-  grid-template-columns: 1fr; /* base: uma coluna só, empilhada */
-  gap: var(--espaco-3);
-}
-
-.quadro > h2 {
-  grid-column: 1 / -1;
-  font-size: 1.125rem;
-}
-
-/* Colunas de status (Flexbox vertical) */
-.coluna {
-  min-width: 0;
-  background-color: var(--cor-fundo);
-  border-radius: var(--raio);
-  padding: var(--espaco-2);
-}
-
-.coluna-titulo {
-  margin-bottom: var(--espaco-2);
-  padding-bottom: var(--espaco-1);
-  border-bottom: 3px solid var(--cor-borda);
-  font-size: 1rem;
-}
-
-.coluna--a-fazer .coluna-titulo { border-bottom-color: var(--cor-a-fazer); }
-.coluna--em-andamento .coluna-titulo { border-bottom-color: var(--cor-em-andamento); }
-.coluna--em-revisao .coluna-titulo { border-bottom-color: var(--cor-em-revisao); }
-.coluna--concluida .coluna-titulo { border-bottom-color: var(--cor-concluida); }
-
-.lista-cartoes {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espaco-2);
-}
-
-/* ---------- Cartão de tarefa ---------- */
-.cartao {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espaco-2);
   background-color: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio);
-  padding: var(--espaco-2);
+  font-weight: 600;
+  color: var(--cor-texto);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.cartao-cabecalho {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--espaco-2);
-}
-
-.cartao-titulo {
-  flex: 1;
-  min-width: 0; /* permite encolher abaixo do conteúdo — é o que libera o ellipsis */
-  font-size: 1rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.cartao-prioridade {
-  flex-shrink: 0;
-  white-space: nowrap;
-  font-size: 0.8125rem;
-  color: var(--cor-texto-suave);
-}
-
-.cartao-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  font-size: 0.875rem;
-}
-
-.cartao-info dt {
-  color: var(--cor-texto-suave);
-}
-
-.cartao-prazo {
-  margin-top: auto; /* empurra o prazo pro rodapé do cartão */
-  padding-top: var(--espaco-2);
-  border-top: 1px solid var(--cor-borda);
-  font-size: 0.875rem;
-}
-
-/* Telas maiores */
-
-/* Quebra 1 — 640px*/
-@media (min-width: 640px) {
-  main {
-    padding: var(--espaco-3);
-  }
-
-  .busca-filtros {
-    padding: var(--espaco-3);
-  }
-
-  .quadro {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Quebra 2 — 1080px*/
-@media (min-width: 1080px) {
-  .quadro {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.btn-limpar:hover,
+.btn-limpar:focus-visible {
+  background-color: #e1e4e8;
 }
