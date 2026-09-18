@@ -15,6 +15,11 @@ function atualizarInterface() {
   renderizar(estado, colunasQuadro, regiaoStatus);
 }
 
+function atualizarEstado(alteracoes) {
+  Object.assign(estado, alteracoes);
+  atualizarInterface();
+}
+
 function mensagemDeErro(erro) {
   if (erro.tipo === "rede") {
     return "Não foi possível conectar para carregar as tarefas. Verifique sua conexão com a internet e tente novamente.";
@@ -34,16 +39,14 @@ function mensagemDeErro(erro) {
 function inicializarOuvintesEventos() {
   // A. Evento de Busca por Título (evento input)
   inputBusca?.addEventListener("input", (e) => {
-    estado.busca = e.target.value;
-    atualizarInterface();
+    atualizarEstado({ busca: e.target.value });
   });
 
   // B. Evento de Filtro por Status (rádios)
   const radiosStatus = formFiltros?.querySelectorAll('input[name="filtro-status"]');
   radiosStatus?.forEach((radio) => {
     radio.addEventListener("change", (e) => {
-      estado.status = e.target.value;
-      atualizarInterface();
+      atualizarEstado({ status: e.target.value });
     });
   });
 
@@ -51,26 +54,17 @@ function inicializarOuvintesEventos() {
   const radiosPrioridade = formFiltros?.querySelectorAll('input[name="filtro-prioridade"]');
   radiosPrioridade?.forEach((radio) => {
     radio.addEventListener("change", (e) => {
-      estado.prioridade = e.target.value;
-      atualizarInterface();
+      atualizarEstado({ prioridade: e.target.value });
     });
   });
 
   // D. Evento de Ordenação por Prazo (select)
   selectOrdenacao?.addEventListener("change", (e) => {
-    estado.ordenacao = e.target.value;
-    atualizarInterface();
+    atualizarEstado({ ordenacao: e.target.value });
   });
 
   // E. Evento do Botão Limpar Filtros
   btnLimpar?.addEventListener("click", () => {
-    // 1. Reseta o Objeto Estado para os valores iniciais
-    estado.busca = "";
-    estado.status = "todos";
-    estado.prioridade = "todas";
-    estado.ordenacao = "padrao";
-
-    // 2. Sincroniza os controles visuais do formulário no DOM
     if (inputBusca) inputBusca.value = "";
     if (selectOrdenacao) selectOrdenacao.value = "padrao";
 
@@ -80,8 +74,12 @@ function inicializarOuvintesEventos() {
     const radioPrioridadeTodas = document.getElementById("prioridade-todas");
     if (radioPrioridadeTodas) radioPrioridadeTodas.checked = true;
 
-    // 3. Renderiza a tela limpa
-    atualizarInterface();
+    atualizarEstado({
+      busca: "",
+      status: "todos",
+      prioridade: "todas",
+      ordenacao: "padrao",
+    });
   });
 }
 
