@@ -209,6 +209,7 @@ function inicializarInteracaoDosCartoes() {
       inicioY: evento.clientY,
       ativo: false,
     };
+    cartao.setPointerCapture?.(evento.pointerId);
   });
 
   colunasQuadro?.addEventListener("pointermove", (evento) => {
@@ -251,8 +252,12 @@ function inicializarInteracaoDosCartoes() {
       return;
     }
 
+    const cartao = arrastePorPonteiro.cartao;
     if (arrastePorPonteiro.ativo) {
-      arrastePorPonteiro.cartao.setAttribute("aria-grabbed", "false");
+      cartao.setAttribute("aria-grabbed", "false");
+    }
+    if (cartao.hasPointerCapture?.(evento.pointerId)) {
+      cartao.releasePointerCapture(evento.pointerId);
     }
     arrastePorPonteiro = null;
     cartaoArrastado = null;
@@ -260,6 +265,8 @@ function inicializarInteracaoDosCartoes() {
 
   document.addEventListener("pointerup", encerrarArrastePorPonteiro);
   document.addEventListener("pointercancel", encerrarArrastePorPonteiro);
+  document.addEventListener("lostpointercapture", encerrarArrastePorPonteiro);
+  window.addEventListener("pointerleave", encerrarArrastePorPonteiro);
 }
 
 function mensagemDeErro(erro) {

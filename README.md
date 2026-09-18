@@ -16,7 +16,10 @@ origem vazia e resultado filtrado.
 ## Funcionalidades
 
 - Quatro colunas com cores distintas e cartões com prioridade visualizada por badge.
-- Dois cliques avançam o cartão de status; três cliques retornam ao status anterior.
+- Dois cliques no cartão avançam para o próximo status; três cliques retornam ao
+  status anterior. Um debounce em janela curta evita executar a ação de dois
+  cliques quando a sequência é de três. A mudança de status existe somente em
+  memória durante a sessão e na interface atual.
 - O botão **Ver detalhes** abre uma descrição acessível dentro do cartão.
 - Arrastar e soltar reorganiza visualmente os cartões; a ordem não é persistida e
   não altera status ou dados canônicos.
