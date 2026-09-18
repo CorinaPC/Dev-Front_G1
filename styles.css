@@ -178,12 +178,14 @@ button:focus-visible {
 }
 
 .cartao {
+  display: block;
+  min-height: 12rem;
   padding: var(--espaco-3);
-  background: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
   border-left: 4px solid var(--cor-destaque);
-  border-radius: var(--raio);
-  box-shadow: 0 2px 8px rgba(31, 41, 51, 0.06);
+  border-radius: 0.625rem;
+  box-shadow: 0 4px 12px rgba(31, 41, 51, 0.12);
 }
 
 .cartao-cabecalho {
