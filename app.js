@@ -129,16 +129,44 @@ function inicializarInteracaoDosCartoes() {
   let cartaoArrastado = null;
   let arrastePorPonteiro = null;
 
-  function moverCartaoVisualmente(cartao, coluna, clientX, clientY) {
+  function encontrarColunaDestino(cartao, evento) {
+    const elementos = document.elementsFromPoint?.(
+      evento.clientX,
+      evento.clientY,
+    ) || [];
+
+    for (const elemento of elementos) {
+      const coluna = elemento.closest?.(".coluna");
+      if (coluna && !coluna.contains(cartao)) return coluna;
+    }
+
+    return evento.target instanceof Element
+      ? evento.target.closest(".coluna")
+      : null;
+  }
+
+  function encontrarAlvoNaLista(cartao, lista, evento) {
+    const elementos = document.elementsFromPoint?.(
+      evento.clientX,
+      evento.clientY,
+    ) || [];
+
+    for (const elemento of elementos) {
+      const alvo = elemento.closest?.("[data-tarefa-id]");
+      if (alvo && alvo !== cartao && alvo.parentElement === lista) return alvo;
+    }
+
+    return null;
+  }
+
+  function moverCartaoVisualmente(cartao, coluna, evento) {
     const lista = coluna.querySelector(".lista-cartoes");
     if (!lista) return;
 
-    const alvo = document
-      .elementFromPoint(clientX, clientY)
-      ?.closest("[data-tarefa-id]");
-    if (alvo && alvo !== cartao && alvo.parentElement === lista) {
+    const alvo = encontrarAlvoNaLista(cartao, lista, evento);
+    if (alvo) {
       const rect = alvo.getBoundingClientRect();
-      const depois = clientY > rect.top + rect.height / 2;
+      const depois = evento.clientY > rect.top + rect.height / 2;
       lista.insertBefore(
         cartao.parentElement,
         depois ? alvo.nextSibling : alvo,
@@ -171,20 +199,12 @@ function inicializarInteracaoDosCartoes() {
 
   colunasQuadro?.addEventListener("drop", (evento) => {
     if (!(evento.target instanceof Element)) return;
-    const coluna = evento.target.closest(".coluna");
-    if (!coluna || !cartaoArrastado) return;
+    if (!cartaoArrastado) return;
+    const coluna = encontrarColunaDestino(cartaoArrastado, evento);
+    if (!coluna) return;
     evento.preventDefault();
 
-    const lista = coluna.querySelector(".lista-cartoes");
-    if (!lista) return;
-
-    const alvo = evento.target.closest("[data-tarefa-id]");
-    moverCartaoVisualmente(
-      cartaoArrastado,
-      coluna,
-      evento.clientX,
-      evento.clientY,
-    );
+    moverCartaoVisualmente(cartaoArrastado, coluna, evento);
   });
 
   colunasQuadro?.addEventListener("dragend", (evento) => {
@@ -231,16 +251,9 @@ function inicializarInteracaoDosCartoes() {
     cartaoArrastado.setAttribute("aria-grabbed", "true");
     evento.preventDefault();
 
-    const coluna = document
-      .elementFromPoint(evento.clientX, evento.clientY)
-      ?.closest(".coluna");
+    const coluna = encontrarColunaDestino(cartaoArrastado, evento);
     if (coluna) {
-      moverCartaoVisualmente(
-        cartaoArrastado,
-        coluna,
-        evento.clientX,
-        evento.clientY,
-      );
+      moverCartaoVisualmente(cartaoArrastado, coluna, evento);
     }
   });
 
@@ -253,6 +266,10 @@ function inicializarInteracaoDosCartoes() {
     }
 
     const cartao = arrastePorPonteiro.cartao;
+    if (arrastePorPonteiro.ativo) {
+      const coluna = encontrarColunaDestino(cartao, evento);
+      if (coluna) moverCartaoVisualmente(cartao, coluna, evento);
+    }
     if (arrastePorPonteiro.ativo) {
       cartao.setAttribute("aria-grabbed", "false");
     }
