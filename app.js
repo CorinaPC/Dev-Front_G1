@@ -1,5 +1,5 @@
-import { carregarTarefas } from "./api.js";
-import { estado, derivarTarefas } from "./estados.js";
+import { carregarTarefas } from "./js/api.js";
+import { estado } from "./js/estados.js";
 import { renderizar, instalarEventosDoQuadro } from "./renderizacao.js";
 
 // Elementos do DOM
@@ -16,17 +16,19 @@ function atualizarInterface() {
 }
 
 function mensagemDeErro(erro) {
-  if (erro.name === "TypeError") {
+  if (erro.tipo === "rede") {
     return "Não foi possível conectar para carregar as tarefas. Verifique sua conexão com a internet e tente novamente.";
   }
 
-  if (erro.name === "SyntaxError") {
+  if (erro.tipo === "formato") {
     return "As tarefas vieram num formato inválido. Tente recarregar a página em instantes.";
   }
 
-  return erro.status
-    ? `Não foi possível carregar as tarefas (erro HTTP ${erro.status}).`
-    : "Não foi possível carregar as tarefas. Tente novamente em instantes.";
+  if (erro.tipo === "protocolo") {
+    return `Não foi possível carregar as tarefas (erro HTTP ${erro.status}).`;
+  }
+
+  return "Não foi possível carregar as tarefas. Tente novamente em instantes.";
 }
 
 function inicializarOuvintesEventos() {
