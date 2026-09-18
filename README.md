@@ -1,5 +1,14 @@
 # Gerenciador de Tarefas Acadêmicas
 
+## Diferencial: reorganização visual por arraste
+
+Segure qualquer cartão e arraste-o para reorganizá-lo visualmente dentro de
+qualquer coluna. O recurso usa arraste HTML5 e fallback por ponteiro para
+mouse/touch; soltar sobre outro cartão posiciona antes/depois dele, e soltar em
+uma área vazia coloca o cartão no fim da coluna. Essa operação é somente
+visual: não persiste a ordem, não muda status ou dados canônicos e não permite
+cadastro, edição ou exclusão.
+
 Quadro Kanban acadêmico com busca por título, filtros combináveis por status e
 prioridade, ordenação por prazo e mensagens acessíveis de carregamento, erro,
 origem vazia e resultado filtrado.
@@ -9,8 +18,8 @@ origem vazia e resultado filtrado.
 - Quatro colunas com cores distintas e cartões com prioridade visualizada por badge.
 - Dois cliques avançam o cartão de status; três cliques retornam ao status anterior.
 - O botão **Ver detalhes** abre uma descrição acessível dentro do cartão.
-- Arrastar e soltar apenas reorganiza visualmente os cartões na coluna. A ordem não
-  é persistida, não altera status ou dados canônicos e não cadastra, edita ou exclui tarefas.
+- Arrastar e soltar reorganiza visualmente os cartões; a ordem não é persistida e
+  não altera status ou dados canônicos.
 - A região de status usa `role="status"` e `aria-live="polite"`.
 
 ## Configuração e execução local

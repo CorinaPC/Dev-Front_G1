@@ -127,11 +127,32 @@ function inicializarInteracaoDosCartoes() {
   });
 
   let cartaoArrastado = null;
+  let arrastePorPonteiro = null;
+
+  function moverCartaoVisualmente(cartao, coluna, clientX, clientY) {
+    const lista = coluna.querySelector(".lista-cartoes");
+    if (!lista) return;
+
+    const alvo = document
+      .elementFromPoint(clientX, clientY)
+      ?.closest("[data-tarefa-id]");
+    if (alvo && alvo !== cartao && alvo.parentElement === lista) {
+      const rect = alvo.getBoundingClientRect();
+      const depois = clientY > rect.top + rect.height / 2;
+      lista.insertBefore(
+        cartao.parentElement,
+        depois ? alvo.nextSibling : alvo,
+      );
+    } else if (!alvo || alvo.parentElement !== lista) {
+      lista.appendChild(cartao.parentElement);
+    }
+  }
 
   colunasQuadro?.addEventListener("dragstart", (evento) => {
     if (!(evento.target instanceof Element)) return;
     const cartao = evento.target.closest("[data-tarefa-id]");
     if (!cartao) return;
+    arrastePorPonteiro = null;
     cartaoArrastado = cartao;
     cartao.setAttribute("aria-grabbed", "true");
     if (evento.dataTransfer) {
@@ -158,16 +179,12 @@ function inicializarInteracaoDosCartoes() {
     if (!lista) return;
 
     const alvo = evento.target.closest("[data-tarefa-id]");
-    if (alvo && alvo !== cartaoArrastado && alvo.parentElement === lista) {
-      const rect = alvo.getBoundingClientRect();
-      const depois = evento.clientY > rect.top + rect.height / 2;
-      lista.insertBefore(
-        cartaoArrastado.parentElement,
-        depois ? alvo.nextSibling : alvo,
-      );
-    } else if (!alvo || alvo.parentElement !== lista) {
-      lista.appendChild(cartaoArrastado.parentElement);
-    }
+    moverCartaoVisualmente(
+      cartaoArrastado,
+      coluna,
+      evento.clientX,
+      evento.clientY,
+    );
   });
 
   colunasQuadro?.addEventListener("dragend", (evento) => {
@@ -179,6 +196,70 @@ function inicializarInteracaoDosCartoes() {
     if (cartao) cartao.setAttribute("aria-grabbed", "false");
     cartaoArrastado = null;
   });
+
+  colunasQuadro?.addEventListener("pointerdown", (evento) => {
+    if (!(evento.target instanceof Element)) return;
+    const cartao = evento.target.closest("[data-tarefa-id]");
+    if (!cartao || !colunasQuadro.contains(cartao)) return;
+
+    arrastePorPonteiro = {
+      cartao,
+      pointerId: evento.pointerId,
+      inicioX: evento.clientX,
+      inicioY: evento.clientY,
+      ativo: false,
+    };
+  });
+
+  colunasQuadro?.addEventListener("pointermove", (evento) => {
+    if (
+      !arrastePorPonteiro ||
+      evento.pointerId !== arrastePorPonteiro.pointerId
+    ) {
+      return;
+    }
+
+    const distancia = Math.hypot(
+      evento.clientX - arrastePorPonteiro.inicioX,
+      evento.clientY - arrastePorPonteiro.inicioY,
+    );
+    if (!arrastePorPonteiro.ativo && distancia < 6) return;
+
+    arrastePorPonteiro.ativo = true;
+    cartaoArrastado = arrastePorPonteiro.cartao;
+    cartaoArrastado.setAttribute("aria-grabbed", "true");
+    evento.preventDefault();
+
+    const coluna = document
+      .elementFromPoint(evento.clientX, evento.clientY)
+      ?.closest(".coluna");
+    if (coluna) {
+      moverCartaoVisualmente(
+        cartaoArrastado,
+        coluna,
+        evento.clientX,
+        evento.clientY,
+      );
+    }
+  });
+
+  const encerrarArrastePorPonteiro = (evento) => {
+    if (
+      !arrastePorPonteiro ||
+      evento.pointerId !== arrastePorPonteiro.pointerId
+    ) {
+      return;
+    }
+
+    if (arrastePorPonteiro.ativo) {
+      arrastePorPonteiro.cartao.setAttribute("aria-grabbed", "false");
+    }
+    arrastePorPonteiro = null;
+    cartaoArrastado = null;
+  };
+
+  document.addEventListener("pointerup", encerrarArrastePorPonteiro);
+  document.addEventListener("pointercancel", encerrarArrastePorPonteiro);
 }
 
 function mensagemDeErro(erro) {
