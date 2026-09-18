@@ -3,9 +3,9 @@
 ## Diferencial: reorganização visual por arraste
 
 Segure qualquer cartão e arraste-o para reorganizá-lo visualmente dentro de
-qualquer coluna. O recurso usa arraste HTML5 e fallback por ponteiro para
-mouse/touch; soltar sobre outro cartão posiciona antes/depois dele, e soltar em
-uma área vazia coloca o cartão no fim da coluna. Essa operação é somente
+qualquer coluna. O recurso usa o arraste HTML5 nativo: `dragstart` captura o
+cartão, `dragover` aceita a coluna inteira e `drop` posiciona antes/depois de
+outro cartão ou no fim quando a área está vazia. Essa operação é somente
 visual: não persiste a ordem, não muda status ou dados canônicos e não permite
 cadastro, edição ou exclusão.
 

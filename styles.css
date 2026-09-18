@@ -272,7 +272,6 @@ button:focus-visible {
 .cartao[draggable="true"] {
   cursor: grab;
   user-select: none;
-  touch-action: none;
 }
 
 .cartao[aria-grabbed="true"] {
