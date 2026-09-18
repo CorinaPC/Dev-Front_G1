@@ -16,6 +16,7 @@ let sequenciaCliques = null;
 // Ponto central do ciclo de atualização: Estado -> Renderização
 function atualizarInterface() {
   renderizar(estado, colunasQuadro, regiaoStatus);
+  prepararCartoes();
 }
 
 function atualizarEstado(alteracoes) {
@@ -39,9 +40,57 @@ function alterarStatusPorCliques(id, quantidade) {
   }
 }
 
+function prepararCartoes() {
+  colunasQuadro?.querySelectorAll("[data-tarefa-id]").forEach((cartao) => {
+    const tarefa = estado.tarefas.find(
+      (item) => item.id === cartao.dataset.tarefaId,
+    );
+    if (!tarefa) return;
+
+    cartao.draggable = true;
+    cartao.tabIndex = 0;
+    cartao.dataset.prioridade = tarefa.prioridade.toLowerCase();
+    cartao.setAttribute(
+      "aria-label",
+      `${tarefa.titulo}. Arraste para reorganizar visualmente.`,
+    );
+  });
+}
+
+function mostrarDetalhes(cartao) {
+  const id = cartao.dataset.tarefaId;
+  const tarefa = estado.tarefas.find((item) => item.id === id);
+  if (!tarefa || cartao.querySelector("details.detalhes-tarefa")) return;
+
+  const detalhes = document.createElement("details");
+  detalhes.className = "detalhes-tarefa";
+  detalhes.open = true;
+
+  const resumo = document.createElement("summary");
+  resumo.textContent = "Detalhes da tarefa";
+
+  const descricao = document.createElement("p");
+  descricao.textContent = tarefa.descricao;
+
+  detalhes.append(resumo, descricao);
+  cartao.appendChild(detalhes);
+}
+
+function inicializarDetalhesDosCartoes() {
+  colunasQuadro?.addEventListener("click", (evento) => {
+    if (!(evento.target instanceof Element)) return;
+    const botao = evento.target.closest('button[data-acao="ver-detalhes"]');
+    if (!botao || !colunasQuadro.contains(botao)) return;
+
+    const cartao = botao.closest("[data-tarefa-id]");
+    if (cartao) mostrarDetalhes(cartao);
+  });
+}
+
 function inicializarInteracaoDosCartoes() {
   colunasQuadro?.addEventListener("click", (evento) => {
     if (!(evento.target instanceof Element)) return;
+    if (evento.target.closest("button, details")) return;
     const cartao = evento.target.closest("[data-tarefa-id]");
     if (!cartao || !colunasQuadro.contains(cartao)) return;
 
@@ -66,6 +115,52 @@ function inicializarInteracaoDosCartoes() {
       }
       sequenciaCliques = null;
     }, JANELA_CLIQUES_MS);
+  });
+
+  let cartaoArrastado = null;
+
+  colunasQuadro?.addEventListener("dragstart", (evento) => {
+    if (!(evento.target instanceof Element)) return;
+    const cartao = evento.target.closest("[data-tarefa-id]");
+    if (!cartao) return;
+    cartaoArrastado = cartao;
+    cartao.setAttribute("aria-grabbed", "true");
+    evento.dataTransfer.effectAllowed = "move";
+    evento.dataTransfer.setData("text/plain", cartao.dataset.tarefaId);
+  });
+
+  colunasQuadro?.addEventListener("dragover", (evento) => {
+    if (!(evento.target instanceof Element)) return;
+    const lista = evento.target.closest(".lista-cartoes");
+    if (!lista || !cartaoArrastado) return;
+    evento.preventDefault();
+    evento.dataTransfer.dropEffect = "move";
+  });
+
+  colunasQuadro?.addEventListener("drop", (evento) => {
+    if (!(evento.target instanceof Element)) return;
+    const lista = evento.target.closest(".lista-cartoes");
+    if (!lista || !cartaoArrastado) return;
+    evento.preventDefault();
+
+    const alvo = evento.target.closest("[data-tarefa-id]");
+    if (alvo && alvo !== cartaoArrastado) {
+      const rect = alvo.getBoundingClientRect();
+      const depois = evento.clientY > rect.top + rect.height / 2;
+      lista.insertBefore(
+        cartaoArrastado.parentElement,
+        depois ? alvo.nextSibling : alvo,
+      );
+    } else if (!alvo && cartaoArrastado.parentElement !== lista) {
+      lista.appendChild(cartaoArrastado.parentElement);
+    }
+  });
+
+  colunasQuadro?.addEventListener("dragend", (evento) => {
+    if (!(evento.target instanceof Element)) return;
+    const cartao = evento.target.closest("[data-tarefa-id]");
+    if (cartao) cartao.setAttribute("aria-grabbed", "false");
+    cartaoArrastado = null;
   });
 }
 
@@ -135,6 +230,7 @@ function inicializarOuvintesEventos() {
 async function iniciar() {
   // Delegação de eventos instalada apenas UMA VEZ
   instalarEventosDoQuadro(colunasQuadro);
+  inicializarDetalhesDosCartoes();
   inicializarInteracaoDosCartoes();
   inicializarOuvintesEventos();
 
