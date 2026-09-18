@@ -68,17 +68,20 @@ function mostrarDetalhes(cartao) {
   detalhes.open = true;
 
   const resumo = document.createElement("summary");
-  resumo.textContent = "Fechar detalhes";
+  resumo.textContent = "Ver detalhes";
+  resumo.setAttribute("aria-expanded", "true");
 
   const descricao = document.createElement("p");
   descricao.textContent = tarefa.descricao;
 
   detalhes.addEventListener("toggle", () => {
-    resumo.textContent = detalhes.open ? "Fechar detalhes" : "Ver detalhes";
+    resumo.setAttribute("aria-expanded", String(detalhes.open));
   });
 
   detalhes.append(resumo, descricao);
   cartao.appendChild(detalhes);
+  cartao.querySelector('button[data-acao="ver-detalhes"]')?.remove();
+  resumo.focus();
 }
 
 function inicializarDetalhesDosCartoes() {
