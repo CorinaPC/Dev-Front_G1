@@ -48,6 +48,7 @@ function prepararCartoes() {
     if (!tarefa) return;
 
     cartao.draggable = true;
+    cartao.setAttribute("draggable", "true");
     cartao.tabIndex = 0;
     cartao.dataset.prioridade = tarefa.prioridade.toLowerCase();
     cartao.dataset.status = tarefa.status;
@@ -133,8 +134,10 @@ function inicializarInteracaoDosCartoes() {
     if (!cartao) return;
     cartaoArrastado = cartao;
     cartao.setAttribute("aria-grabbed", "true");
-    evento.dataTransfer.effectAllowed = "move";
-    evento.dataTransfer.setData("text/plain", cartao.dataset.tarefaId);
+    if (evento.dataTransfer) {
+      evento.dataTransfer.effectAllowed = "move";
+      evento.dataTransfer.setData("text/plain", cartao.dataset.tarefaId);
+    }
   });
 
   colunasQuadro?.addEventListener("dragover", (evento) => {
@@ -142,7 +145,7 @@ function inicializarInteracaoDosCartoes() {
     const coluna = evento.target.closest(".coluna");
     if (!coluna || !cartaoArrastado) return;
     evento.preventDefault();
-    evento.dataTransfer.dropEffect = "move";
+    if (evento.dataTransfer) evento.dataTransfer.dropEffect = "move";
   });
 
   colunasQuadro?.addEventListener("drop", (evento) => {
@@ -168,8 +171,11 @@ function inicializarInteracaoDosCartoes() {
   });
 
   colunasQuadro?.addEventListener("dragend", (evento) => {
-    if (!(evento.target instanceof Element)) return;
-    const cartao = evento.target.closest("[data-tarefa-id]");
+    const cartao =
+      cartaoArrastado ||
+      (evento.target instanceof Element
+        ? evento.target.closest("[data-tarefa-id]")
+        : null);
     if (cartao) cartao.setAttribute("aria-grabbed", "false");
     cartaoArrastado = null;
   });

@@ -209,26 +209,26 @@ button:focus-visible {
 }
 
 .cartao[data-status="a-fazer"] {
-  background: #e8f1ff;
-  border-color: #60a5fa;
+  background: #ffffff;
+  border-color: #cbd5e1;
   border-left: 6px solid #2563eb;
 }
 
 .cartao[data-status="em-andamento"] {
-  background: #fff7d6;
-  border-color: #fbbf24;
+  background: #ffffff;
+  border-color: #cbd5e1;
   border-left: 6px solid #d97706;
 }
 
 .cartao[data-status="em-revisao"] {
-  background: #f0eaff;
-  border-color: #a78bfa;
+  background: #ffffff;
+  border-color: #cbd5e1;
   border-left: 6px solid #7c3aed;
 }
 
 .cartao[data-status="concluida"] {
-  background: #e1faed;
-  border-color: #4ade80;
+  background: #ffffff;
+  border-color: #cbd5e1;
   border-left: 6px solid #059669;
 }
 
@@ -271,6 +271,7 @@ button:focus-visible {
 
 .cartao[draggable="true"] {
   cursor: grab;
+  user-select: none;
 }
 
 .cartao[aria-grabbed="true"] {
