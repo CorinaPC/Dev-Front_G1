@@ -99,6 +99,7 @@ function inicializarDetalhesDosCartoes() {
 function inicializarInteracaoDosCartoes() {
   colunasQuadro?.addEventListener("click", (evento) => {
     if (!(evento.target instanceof Element)) return;
+    if (arrasteRecente) return;
     if (evento.target.closest("button, details")) return;
     const cartao = evento.target.closest("[data-tarefa-id]");
     if (!cartao || !colunasQuadro.contains(cartao)) return;
@@ -128,6 +129,8 @@ function inicializarInteracaoDosCartoes() {
 
   let cartaoArrastado = null;
   let arrastePorPonteiro = null;
+  let arrasteRecente = false;
+  let limparArrasteRecente = null;
 
   function encontrarColunaDestino(cartao, evento) {
     const elementos = document.elementsFromPoint?.(
@@ -229,10 +232,9 @@ function inicializarInteracaoDosCartoes() {
       inicioY: evento.clientY,
       ativo: false,
     };
-    cartao.setPointerCapture?.(evento.pointerId);
   });
 
-  colunasQuadro?.addEventListener("pointermove", (evento) => {
+  const moverPorPonteiro = (evento) => {
     if (
       !arrastePorPonteiro ||
       evento.pointerId !== arrastePorPonteiro.pointerId
@@ -255,7 +257,7 @@ function inicializarInteracaoDosCartoes() {
     if (coluna) {
       moverCartaoVisualmente(cartaoArrastado, coluna, evento);
     }
-  });
+  };
 
   const encerrarArrastePorPonteiro = (evento) => {
     if (
@@ -272,18 +274,22 @@ function inicializarInteracaoDosCartoes() {
     }
     if (arrastePorPonteiro.ativo) {
       cartao.setAttribute("aria-grabbed", "false");
-    }
-    if (cartao.hasPointerCapture?.(evento.pointerId)) {
-      cartao.releasePointerCapture(evento.pointerId);
+      arrasteRecente = true;
+      clearTimeout(limparArrasteRecente);
+      limparArrasteRecente = setTimeout(() => {
+        arrasteRecente = false;
+      }, JANELA_CLIQUES_MS);
     }
     arrastePorPonteiro = null;
     cartaoArrastado = null;
   };
 
+  document.addEventListener("pointermove", moverPorPonteiro);
   document.addEventListener("pointerup", encerrarArrastePorPonteiro);
   document.addEventListener("pointercancel", encerrarArrastePorPonteiro);
   document.addEventListener("lostpointercapture", encerrarArrastePorPonteiro);
   window.addEventListener("pointerleave", encerrarArrastePorPonteiro);
+  window.addEventListener("pointerup", encerrarArrastePorPonteiro);
 }
 
 function mensagemDeErro(erro) {
