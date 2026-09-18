@@ -50,6 +50,7 @@ function prepararCartoes() {
     cartao.draggable = true;
     cartao.tabIndex = 0;
     cartao.dataset.prioridade = tarefa.prioridade.toLowerCase();
+    cartao.dataset.status = tarefa.status;
     cartao.setAttribute(
       "aria-label",
       `${tarefa.titulo}. Arraste para reorganizar visualmente.`,
@@ -131,27 +132,30 @@ function inicializarInteracaoDosCartoes() {
 
   colunasQuadro?.addEventListener("dragover", (evento) => {
     if (!(evento.target instanceof Element)) return;
-    const lista = evento.target.closest(".lista-cartoes");
-    if (!lista || !cartaoArrastado) return;
+    const coluna = evento.target.closest(".coluna");
+    if (!coluna || !cartaoArrastado) return;
     evento.preventDefault();
     evento.dataTransfer.dropEffect = "move";
   });
 
   colunasQuadro?.addEventListener("drop", (evento) => {
     if (!(evento.target instanceof Element)) return;
-    const lista = evento.target.closest(".lista-cartoes");
-    if (!lista || !cartaoArrastado) return;
+    const coluna = evento.target.closest(".coluna");
+    if (!coluna || !cartaoArrastado) return;
     evento.preventDefault();
 
+    const lista = coluna.querySelector(".lista-cartoes");
+    if (!lista) return;
+
     const alvo = evento.target.closest("[data-tarefa-id]");
-    if (alvo && alvo !== cartaoArrastado) {
+    if (alvo && alvo !== cartaoArrastado && alvo.parentElement === lista) {
       const rect = alvo.getBoundingClientRect();
       const depois = evento.clientY > rect.top + rect.height / 2;
       lista.insertBefore(
         cartaoArrastado.parentElement,
         depois ? alvo.nextSibling : alvo,
       );
-    } else if (!alvo && cartaoArrastado.parentElement !== lista) {
+    } else if (!alvo || alvo.parentElement !== lista) {
       lista.appendChild(cartaoArrastado.parentElement);
     }
   });
