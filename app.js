@@ -9,6 +9,9 @@ const selectOrdenacao = document.getElementById("ordenacao-prazo");
 const btnLimpar = document.getElementById("btn-limpar-filtros");
 const colunasQuadro = document.getElementById("colunas-quadro");
 const regiaoStatus = document.getElementById("estado-quadro");
+const STATUS = ["a-fazer", "em-andamento", "em-revisao", "concluida"];
+const JANELA_CLIQUES_MS = 350;
+let sequenciaCliques = null;
 
 // Ponto central do ciclo de atualização: Estado -> Renderização
 function atualizarInterface() {
@@ -18,6 +21,52 @@ function atualizarInterface() {
 function atualizarEstado(alteracoes) {
   Object.assign(estado, alteracoes);
   atualizarInterface();
+}
+
+function alterarStatusPorCliques(id, quantidade) {
+  const tarefa = estado.tarefas.find((item) => item.id === id);
+  if (!tarefa) return;
+
+  const indiceAtual = STATUS.indexOf(tarefa.status);
+  const proximoIndice = Math.max(
+    0,
+    Math.min(STATUS.length - 1, indiceAtual + quantidade),
+  );
+
+  if (indiceAtual !== proximoIndice) {
+    tarefa.status = STATUS[proximoIndice];
+    atualizarEstado({ tarefas: estado.tarefas });
+  }
+}
+
+function inicializarInteracaoDosCartoes() {
+  colunasQuadro?.addEventListener("click", (evento) => {
+    if (!(evento.target instanceof Element)) return;
+    const cartao = evento.target.closest("[data-tarefa-id]");
+    if (!cartao || !colunasQuadro.contains(cartao)) return;
+
+    const id = cartao.dataset.tarefaId;
+    if (sequenciaCliques?.id !== id) {
+      sequenciaCliques = { id, quantidade: 0, timer: null };
+    }
+
+    sequenciaCliques.quantidade += 1;
+    if (sequenciaCliques.quantidade === 3) {
+      clearTimeout(sequenciaCliques.timer);
+      alterarStatusPorCliques(id, -1);
+      sequenciaCliques = null;
+      return;
+    }
+
+    clearTimeout(sequenciaCliques.timer);
+    sequenciaCliques.timer = setTimeout(() => {
+      if (sequenciaCliques?.id !== id) return;
+      if (sequenciaCliques.quantidade === 2) {
+        alterarStatusPorCliques(id, 1);
+      }
+      sequenciaCliques = null;
+    }, JANELA_CLIQUES_MS);
+  });
 }
 
 function mensagemDeErro(erro) {
@@ -86,6 +135,7 @@ function inicializarOuvintesEventos() {
 async function iniciar() {
   // Delegação de eventos instalada apenas UMA VEZ
   instalarEventosDoQuadro(colunasQuadro);
+  inicializarInteracaoDosCartoes();
   inicializarOuvintesEventos();
 
   // Início do carregamento
